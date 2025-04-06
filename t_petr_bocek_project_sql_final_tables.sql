@@ -34,8 +34,8 @@ SELECT
 	, cpr.industry_branch_code AS payroll_industry_branch_code
 	, cpib.name AS payroll_industry_branch_name
 	, cpr.payroll_year 
-FROM engeto_09_2024.czechia_payroll AS cpr
-JOIN engeto_09_2024.czechia_payroll_industry_branch AS cpib
+FROM engeto_db.czechia_payroll AS cpr
+JOIN engeto_db.czechia_payroll_industry_branch AS cpib
 	ON cpr.industry_branch_code = cpib.code
 WHERE 1 = 1
 	AND cpr.value_type_code = 5958
@@ -56,8 +56,8 @@ SELECT
 	  , cp.category_code AS category_code
 	  , cpc.name AS category_name
 	  , YEAR(cp.date_from) AS price_year
-FROM engeto_09_2024.czechia_price AS cp
-JOIN engeto_09_2024.czechia_price_category AS cpc
+FROM engeto_db.czechia_price AS cp
+JOIN engeto_db.czechia_price_category AS cpc
 	ON cp.category_code = cpc.code 
 WHERE cp.region_code IS NOT NULL
 GROUP BY price_year, cp.category_code
@@ -87,12 +87,6 @@ SELECT
 FROM t_payroll_final AS tpayf
 LEFT JOIN t_price_final AS tprif
 	ON tpayf.payroll_year = tprif.price_year
-ORDER BY 
-	  tpayf.payroll_year
-	, tpayf.payroll_industry_branch_code
-	, tprif.category_code
-	, tpayf.average_payroll_value
-	, tprif.average_price_value
 ;
 
 -- t_petr_bocek_project_sql_secondary_final
