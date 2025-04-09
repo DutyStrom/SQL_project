@@ -49,12 +49,16 @@ CREATE OR REPLACE TEMPORARY TABLE t_price_final (
 	  average_price_value DOUBLE
 	, category_code INT(11)
 	, category_name VARCHAR(50)
+	, unit_value DOUBLE
+	, price_unit VARCHAR(2)
 	, price_year INT
 	)
 SELECT 
 	    ROUND(AVG(cp.value), 2) AS average_price_value
 	  , cp.category_code AS category_code
 	  , cpc.name AS category_name
+	  , cpc.price_value AS unit_value
+	  , cpc. price_unit AS price_unit
 	  , YEAR(cp.date_from) AS price_year
 FROM engeto_db.czechia_price AS cp
 JOIN engeto_db.czechia_price_category AS cpc
@@ -74,6 +78,8 @@ CREATE OR REPLACE TABLE t_petr_bocek_project_sql_primary_final (
 	, payroll_value DECIMAL(14,4)
 	, category_name VARCHAR(50)
 	, category_code INT(11)
+	, unit_value DOUBLE
+	, price_unit VARCHAR(2)
 	, price_value DOUBLE
 	)
 SELECT
@@ -83,6 +89,8 @@ SELECT
 	, tpayf.average_payroll_value AS payroll_value
 	, tprif.category_name 
 	, tprif.category_code
+	, tprif.unit_value
+	, tprif.price_unit
 	, tprif.average_price_value AS price_value
 FROM t_payroll_final AS tpayf
 LEFT JOIN t_price_final AS tprif

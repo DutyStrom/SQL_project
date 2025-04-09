@@ -3,7 +3,7 @@
  * Question:
  * WHAT IS PAYROLL TREND IN THE MONITORED YEARS?
 
- * Source tables:
+ * Source table:
  * engeto_db.t_petr_bocek_project_sql_primary_final
  * 
 */
