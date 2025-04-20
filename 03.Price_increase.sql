@@ -21,7 +21,7 @@ CREATE OR REPLACE VIEW v_price_increase AS (
 	)
 ;
 
-
+-- Percentage price increase in all food categories in the monitored period
 SELECT 
 	  vpi.`year`
 	, vpi.category_name
@@ -34,4 +34,30 @@ SELECT
 FROM v_price_increase AS vpi
 WHERE 1 = 1
 	AND vpi.`year` IN (2006, 2018)
+;
+
+-- Lowest percentage price increase
+WITH cte_price_inc AS (
+	SELECT 
+	  vpi.`year`
+	, vpi.category_name
+	, vpi.price_value
+	, ROUND(((vpi.price_value - 
+			  LAG(vpi.price_value) OVER (PARTITION BY vpi.category_name ORDER BY vpi.`year`)) * 
+			  100) /
+			  LAG(vpi.price_value) OVER (PARTITION BY vpi.category_name ORDER BY vpi.`year`),
+			  2) AS pct_increase
+	FROM v_price_increase AS vpi
+	WHERE 1 = 1
+		AND vpi.`year` IN (2006, 2018)
+	)
+SELECT
+	  `year`
+	, category_name 
+	, pct_increase AS lowest_pct_increase
+FROM cte_price_inc 
+WHERE 1 = 1
+	AND pct_increase IS NOT NULL 
+ORDER BY pct_increase 
+LIMIT 1
 ;
