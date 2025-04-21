@@ -1,6 +1,6 @@
 /*
  * QUESTION:
- * Which food category has the lowest price increase? (percentage)
+ * Which food category has the lowest price growth? (percentage)
  * 
  * source TABLE:
  * t_petr_bocek_project_sql_primary_final

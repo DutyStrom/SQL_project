@@ -2,7 +2,7 @@
  * 
  * Question:
  * WHAT IS PAYROLL TREND IN THE MONITORED YEARS?
-
+ *
  * Source table:
  * engeto_db.t_petr_bocek_project_sql_primary_final
  * 
@@ -22,6 +22,8 @@ CREATE OR REPLACE VIEW v_payroll_trend AS (
 
 SELECT
 	  vpt.*
-	, ROUND((vpt.payroll_value - (LAG(vpt.payroll_value) OVER (PARTITION BY vpt.branch_code ORDER BY vpt.`year`))), 2) AS payroll_trend
+	, ROUND((vpt.payroll_value - 
+		   (LAG(vpt.payroll_value) OVER (PARTITION BY vpt.branch_code ORDER BY vpt.`year`))),
+		   2) AS payroll_trend
 FROM v_payroll_trend AS vpt
 ;
