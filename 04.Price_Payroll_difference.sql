@@ -5,33 +5,60 @@
  * 
  * source TABLES:
  * t_petr_bocek_project_sql_primary_final
- * 
  */
+
+-- Payroll data view
+CREATE OR REPLACE VIEW v_payroll_data AS (
+	SELECT DISTINCT
+		  tprifi.`year`
+		, tprifi.industry_branch_name
+		, tprifi.branch_code
+		, tprifi.payroll_value
+	FROM t_petr_bocek_project_sql_primary_final AS tprifi
+	ORDER BY tprifi.branch_code, `year`
+	)
+;
+
+-- Price data view
+CREATE OR REPLACE VIEW v_price_data AS (
+	SELECT DISTINCT
+		  tprifi.`year`
+		, tprifi.category_name
+		, tprifi.category_code
+		, tprifi.unit_value
+		, tprifi.price_unit
+		, tprifi.price_value
+	FROM t_petr_bocek_project_sql_primary_final AS tprifi
+	WHERE tprifi.category_code IS NOT NULL
+	ORDER BY tprifi.category_code, tprifi.`year`
+	)
+;
+
 
 -- Percentage comparsion of the year-on-year difference in payroll and food prices growth.
 WITH cte_payrolls AS (
 		SELECT
-			  vpt.`year` 
-			, ROUND(AVG(vpt.payroll_value), 2) AS avg_yearly_payroll
-			, ROUND(((AVG(vpt.payroll_value) - 
-					LAG(AVG(vpt.payroll_value)) OVER (ORDER BY vpt.`year`)) *
+			  vpad.`year` 
+			, ROUND(AVG(vpad.payroll_value), 2) AS avg_yearly_payroll
+			, ROUND(((AVG(vpad.payroll_value) - 
+					LAG(AVG(vpad.payroll_value)) OVER (ORDER BY vpad.`year`)) *
 					100) /
-					LAG(AVG(vpt.payroll_value)) OVER (ORDER BY vpt.`year`),
+					LAG(AVG(vpad.payroll_value)) OVER (ORDER BY vpad.`year`),
 					2) AS pct_payroll_trend
-		FROM v_payroll_trend AS vpt
-		GROUP BY vpt.`year`
+		FROM v_payroll_data AS vpad
+		GROUP BY vpad.`year`
 		),
 	cte_prices AS (
 		SELECT 
-			  vpi.`year`
-			, ROUND(AVG(vpi.price_value), 2) AS avg_yearly_price
-			, ROUND(((AVG(vpi.price_value) - 
-					  LAG(AVG(vpi.price_value)) OVER (ORDER BY vpi.`year`)) * 
+			  vprd.`year`
+			, ROUND(AVG(vprd.price_value), 2) AS avg_yearly_price
+			, ROUND(((AVG(vprd.price_value) - 
+					  LAG(AVG(vprd.price_value)) OVER (ORDER BY vprd.`year`)) * 
 					  100) /
-					  LAG(AVG(vpi.price_value)) OVER (ORDER BY vpi.`year`),
+					  LAG(AVG(vprd.price_value)) OVER (ORDER BY vprd.`year`),
 					  2) AS pct_price_trend
-		FROM v_price_increase AS vpi
-		GROUP BY vpi.`year`
+		FROM v_price_data AS vprd
+		GROUP BY vprd.`year`
 		)
 SELECT 
 	  cte_prices.`year`

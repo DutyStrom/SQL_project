@@ -4,52 +4,53 @@
  * 
  * source TABLE:
  * t_petr_bocek_project_sql_primary_final
- * 
  */
 
-CREATE OR REPLACE VIEW v_price_increase AS (
-	SELECT DISTINCT 
+-- Price data view
+CREATE OR REPLACE VIEW v_price_data AS (
+	SELECT DISTINCT
 		  tprifi.`year`
 		, tprifi.category_name
 		, tprifi.category_code
 		, tprifi.unit_value
 		, tprifi.price_unit
 		, tprifi.price_value
-	FROM engeto_db.t_petr_bocek_project_sql_primary_final AS tprifi
-	WHERE category_code IS NOT NULL 
+	FROM t_petr_bocek_project_sql_primary_final AS tprifi
+	WHERE tprifi.category_code IS NOT NULL
 	ORDER BY tprifi.category_code, tprifi.`year`
 	)
 ;
 
+
 -- Percentage price increase in all food categories in the monitored period
 SELECT 
-	  vpi.`year`
-	, vpi.category_name
-	, vpi.price_value
-	, ROUND(((vpi.price_value - 
-			  LAG(vpi.price_value) OVER (PARTITION BY vpi.category_name ORDER BY vpi.`year`)) * 
+	  vprd.`year`
+	, vprd.category_name
+	, vprd.price_value
+	, ROUND(((vprd.price_value - 
+			  LAG(vprd.price_value) OVER (PARTITION BY vprd.category_name ORDER BY vprd.`year`)) * 
 			  100) /
-			  LAG(vpi.price_value) OVER (PARTITION BY vpi.category_name ORDER BY vpi.`year`),
+			  LAG(vprd.price_value) OVER (PARTITION BY vprd.category_name ORDER BY vprd.`year`),
 			  2) AS pct_increase
-FROM v_price_increase AS vpi
+FROM v_price_data AS vprd
 WHERE 1 = 1
-	AND vpi.`year` IN (2006, 2018)
+	AND vprd.`year` IN (2006, 2018)
 ;
 
 -- Lowest percentage price increase
 WITH cte_price_inc AS (
 	SELECT 
-	  vpi.`year`
-	, vpi.category_name
-	, vpi.price_value
-	, ROUND(((vpi.price_value - 
-			  LAG(vpi.price_value) OVER (PARTITION BY vpi.category_name ORDER BY vpi.`year`)) * 
+	  vprd.`year`
+	, vprd.category_name
+	, vprd.price_value
+	, ROUND(((vprd.price_value - 
+			  LAG(vprd.price_value) OVER (PARTITION BY vprd.category_name ORDER BY vprd.`year`)) * 
 			  100) /
-			  LAG(vpi.price_value) OVER (PARTITION BY vpi.category_name ORDER BY vpi.`year`),
+			  LAG(vprd.price_value) OVER (PARTITION BY vprd.category_name ORDER BY vprd.`year`),
 			  2) AS pct_increase
-	FROM v_price_increase AS vpi
+	FROM v_price_data AS vprd
 	WHERE 1 = 1
-		AND vpi.`year` IN (2006, 2018)
+		AND vprd.`year` IN (2006, 2018)
 	)
 SELECT
 	  `year`
