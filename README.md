@@ -1,5 +1,9 @@
 # SQL_project
 
+author: Petr Boček
+email: bocek2@seznam.cz
+discord: Seth_Cz#8510
+
 SQL projekt "Datový analytik s Pythonem ENGETO"
 
 Bohužel jsem zjistil, že nemám analytické myšlení a na datovou analýzu se nehodím.

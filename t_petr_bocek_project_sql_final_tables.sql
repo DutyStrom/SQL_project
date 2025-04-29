@@ -1,4 +1,10 @@
 /*
+ * author: Petr Boček
+ * email: bocek2@seznam.cz
+ * discord: Seth_Cz#8510
+*/
+
+/*
 PRIMARY TABLES
  czechia_payroll AS cp 
  czechia_payroll_calculation AS cpc 
