@@ -64,7 +64,7 @@ SELECT
 	, ROUND(AVG(vpad.payroll_value), 2) AS average_payroll
 	, vprd.category_name
 	, vprd.price_value
-	, ROUND(vpad.payroll_value / vprd.price_value) AS purchasable_quantity
+	, ROUND(AVG(vpad.payroll_value) / vprd.price_value) AS purchasable_quantity
 	, vprd.price_unit AS quantity_unit
 FROM v_payroll_data AS vpad
 JOIN v_price_data AS vprd 

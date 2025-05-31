@@ -1,14 +1,19 @@
 # SQL_project
 
-author: Petr Boček
-email: bocek2@seznam.cz
-discord: Seth_Cz#8510
+author: Petr Boček  
+email: <bocek2@seznam.cz>  
+discord: Seth_Cz#8510  
 
-SQL projekt "Datový analytik s Pythonem ENGETO"
+## SQL projekt "Datový analytik s Pythonem ENGETO"  
 
-Bohužel jsem zjistil, že nemám analytické myšlení a na datovou analýzu se nehodím.
+### Informace o výstupních datech
 
-- Nedokázal jsem vytvořit "rozumnou" výslednou tabulku. Duplikují se mi v ní hodnoty a neuměl jsem to opravit.
-- Sklouzl jsem k tomu, že jsem většinu zadání řešil jedním a tím samým způsobem, což mi příjde LAME, ale taky jsem se tomu nedokázal vyhnout.
-- Ve většině případů jsem ani nepochopil zadání a vůbec netuším, jestli jsou mé hodnoty, které jsem získal / počítal správné, takže vlastně výsledkům nevěřím.
-- Netuším co má být obsahem "průvodní listiny" a "informací o výstupních datech" (hodnoty chybí všude a nechtěl jsem to procházet řádek po řádku, jinak si ověření nedokážu představit)
+>Ačkoliv zdrojová data průměrných mezd byla pro sledované období let 2000 až 2021, tak sledované období cen potravin bylo pouze mezi lety 2006 až 2018.  
+>Z toho důvodu jsou výsledná data omezena na období let 2006 až 2018.  
+>
+>Zdrojová data jsou v mnoha ohledech neúplná. Například ceny "Jakostního vína bílého" byly sledovány až od r. 2015. Tato zkrácená doba se promítla  
+>do výsledků zjišťovaného růstu cen potravin, kdy "Jakostní víno bílé" není do výsledků zahrnuto, jelikož výsledek by nebyl porovnatelný s ostatními potravinami.  
+
+### Závěr
+
+>Tyto odchylky ve zdrojových datech neznačují, že výsledná data jsou téměř jistě do určité míry zkreslená a mělo by se k tomu při jejich prezentaci přihlédnout.
