@@ -68,8 +68,7 @@ SELECT
 FROM cte_payrolls 
 LEFT JOIN cte_prices 
 	ON cte_payrolls.`year` = cte_prices.`year`
-WHERE 1 = 1
-	AND cte_prices.`year` IS NOT NULL
+WHERE cte_prices.`year` IS NOT NULL
 ORDER BY price_payroll_pct_diff DESC
 ;
 

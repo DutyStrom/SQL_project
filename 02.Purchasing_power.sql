@@ -51,9 +51,8 @@ SELECT
 FROM v_payroll_data AS vpad
 JOIN v_price_data AS vprd 
 	ON vpad.`year` = vprd.`year`
-WHERE 1 = 1
-	AND vpad.`year` IN (2006, 2018)
-	AND vprd.category_code IN (111301, 114201)
+WHERE vpad.`year` IN (2006, 2018)
+	AND vprd.category_code IN (111301, 114201)	-- category code: 111301 = "Chléb konzumní kmínový"; 114201 = "Mléko polotučné pasterované"
 ORDER BY vpad.`year`, vpad.payroll_value DESC
 ;
 
@@ -69,8 +68,7 @@ SELECT
 FROM v_payroll_data AS vpad
 JOIN v_price_data AS vprd 
 	ON vpad.`year` = vprd.`year`
-WHERE 1 = 1
-	AND vpad.`year` IN (2006, 2018)
+WHERE vpad.`year` IN (2006, 2018)
 	AND vprd.category_code IN (111301, 114201)
 GROUP BY vpad.`year`, vprd.category_name 
 ORDER BY vpad.`year`

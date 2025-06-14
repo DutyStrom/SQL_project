@@ -33,8 +33,7 @@ SELECT
 			  LAG(vprd.price_value) OVER (PARTITION BY vprd.category_name ORDER BY vprd.`year`),
 			  2) AS pct_increase
 FROM v_price_data AS vprd
-WHERE 1 = 1
-	AND vprd.`year` IN (2006, 2018)
+WHERE vprd.`year` IN (2006, 2018)
 ;
 
 -- Lowest percentage price increase
@@ -49,16 +48,14 @@ WITH cte_price_inc AS (
 			  LAG(vprd.price_value) OVER (PARTITION BY vprd.category_name ORDER BY vprd.`year`),
 			  2) AS pct_increase
 	FROM v_price_data AS vprd
-	WHERE 1 = 1
-		AND vprd.`year` IN (2006, 2018)
+	WHERE vprd.`year` IN (2006, 2018)
 	)
 SELECT
 	  `year`
 	, category_name 
 	, pct_increase AS lowest_pct_increase
 FROM cte_price_inc 
-WHERE 1 = 1
-	AND pct_increase IS NOT NULL 
+WHERE pct_increase IS NOT NULL 
 ORDER BY pct_increase 
 LIMIT 1
 ;

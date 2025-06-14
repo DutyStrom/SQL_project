@@ -43,8 +43,7 @@ SELECT
 FROM engeto_db.czechia_payroll AS cpr
 JOIN engeto_db.czechia_payroll_industry_branch AS cpib
 	ON cpr.industry_branch_code = cpib.code
-WHERE 1 = 1
-	AND cpr.value_type_code = 5958
+WHERE cpr.value_type_code = 5958
 	AND cpr.unit_code = 200
 	AND cpr.calculation_code = 100
 GROUP BY cpr.payroll_year, cpr.industry_branch_code

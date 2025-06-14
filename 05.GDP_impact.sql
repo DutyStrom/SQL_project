@@ -18,8 +18,7 @@ CREATE OR REPLACE VIEW v_GDP_data AS (
 		, tsecfi.gini
 		, tsecfi.population
 	FROM t_petr_bocek_project_sql_secondary_final AS tsecfi
-	WHERE 1 = 1
-		AND tsecfi.country = 'Czech Republic'
+	WHERE tsecfi.country = 'Czech Republic'
 	)
 ;
 
